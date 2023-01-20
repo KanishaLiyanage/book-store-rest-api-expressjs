@@ -9,7 +9,8 @@ const bookSchema = new mongoose.Schema({
     authorName: String,
     abtstact: String,
     publishedDate: String,
-    genre: String
+    genre: String,
+    content: String
 
 });
 
