@@ -1,14 +1,33 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-require('./db/connection');
-const User = require('./models/user');
-const Book = require('./models/book');
+const session = require('express-session');
+const passport = require('passport');
+const passportLocalMongoose = require('passport-local-mongoose');
+
+const port = process.env.PORT || 3000;
 
 const app = express();
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const port = process.env.PORT || 3000;
+app.use(session({
+    // secret: process.env.SECRET,
+    secret:"BOOKSTORESECRET",
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./db/connection');
+
+const User = require('./models/user');
+const Book = require('./models/book');
+
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.post('/register', async (req, res) => {
 
