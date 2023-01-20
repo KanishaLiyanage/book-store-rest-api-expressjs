@@ -7,10 +7,11 @@ const bookSchema = new mongoose.Schema({
         unique: true
     },
     authorName: String,
-    abtstact: String,
+    abstract: String,
     publishedDate: String,
     genre: String,
-    content: String
+    content: String,
+    userID: String
 
 });
 
